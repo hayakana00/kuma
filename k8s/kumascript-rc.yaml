@@ -1,0 +1,26 @@
+apiVersion: v1
+#TODO: switch to Deployment
+kind: ReplicationController
+metadata:
+  name: kumascript
+spec:
+  replicas: 1
+  selector:
+    name: kumascript
+    provider: kumascript
+  template:
+    metadata:
+      labels:
+        name: kumascript
+        provider: kumascript
+    spec:
+      containers:
+      - name: kumascript
+        image: quay.io/mozmar/kumascript
+        #TODO: update kumasript img
+        # CMD added to kumascript Dockerfile in master
+        command: ["node"]
+        args: ["run.js"]
+        # TODO: env var pointing at kuma web or api svc
+        ports:
+        - containerPort: 9080
